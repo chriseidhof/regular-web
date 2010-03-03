@@ -1,10 +1,11 @@
-> {-# LANGUAGE TemplateHaskell, EmptyDataDecls, TypeFamilies #-}
+> {-# LANGUAGE TemplateHaskell, EmptyDataDecls, TypeFamilies, TypeOperators #-}
 >
 > module Example where
 > 
 > import Generics.Regular
 > import Generics.Regular.Views
 > import Generics.Regular.Formlets
+> import Data.Record.Label
 > import Control.Monad.Identity
 > import Control.Applicative
 > import qualified Text.XHtml.Strict as X
@@ -64,11 +65,25 @@ already filled in:
 
 > (_, Identity formHtml, _) = F.runFormState [] (personForm (Just chris))
 
-This technique becomes even more powerful when we use the @fclabels@ package:
+This technique becomes even more powerful when we use the @fclabels@ package.
+Suppose we want to display a form where only the @name@ and the @isMale@ can be
+edited:
 
-TODO: example.
+> data PersonView = PersonView {
+>    __name   :: String
+>  , __isMale :: Bool
+> }
 
-Finally, we need to give an @Applicative@ instance for the @Identity@
-monad.
+We can now use @fclabels@ to convert back and forth between @Person@ and
+@PersonView@:
+
+> $(mkLabels [''Person])
+
+> toView :: Person :-> PersonView
+> toView = Label (PersonView <$> __name `for` name <*> __isMale `for` isMale)
+
+TODO: explain why this is nice.
+
+Finally, we need to give an @Applicative@ instance for the @Identity@ monad.
 
 > instance Applicative Identity where pure = return; (<*>) = ap
