@@ -12,10 +12,20 @@ import qualified Text.XHtml.Strict.Formlets as F
 import Text.Formlets (check)
 import Generics.Regular
 import Generics.Regular.Extras
+import Data.Record.Label
+
+-- | A projectedForm' is used in combination with the @fclabels@ package. See the @Example.lhs@ file for an application.
+projectedForm :: (Regular a, GFormlet (PF a), Applicative m, Monad m) 
+              => (b :-> a) -> b -> XForm m b
+projectedForm toView x = (flip (set toView) x) <$> (gform (get toView <$> (Just x)))
+
+gform :: (Regular a, GFormlet (PF a), Functor m, Applicative m, Monad m) => Maybe a -> XForm m a
+gform x = to <$> (gformf gformlet (from <$> x))
 
 gformlet :: (Regular a, GFormlet (PF a), Functor m, Applicative m, Monad m) => XFormlet m a
 gformlet x = to <$> (gformf gformlet (from <$> x))
 
+type XForm m a = F.XHtmlForm m a
 type XFormlet m a = F.XHtmlFormlet m a
 
 class    Formlet a      where  formlet :: (Functor m, Applicative m, Monad m) => XFormlet m a
