@@ -18,7 +18,8 @@ Build-Depends:   base >= 4,
                  xhtml,
                  formlets == 0.6.1,
                  applicative-extras,
-                 regular >= 0.1.0.2
+                 regular >= 0.1.0.2,
+                 fclabels >= 0.4.2
 
 Description:     This package implements some generic functions for the web. 
                  .
