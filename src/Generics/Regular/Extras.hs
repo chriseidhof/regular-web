@@ -4,8 +4,10 @@ module Generics.Regular.Extras where
 import Generics.Regular
 import Data.Char (isAlpha, toUpper)
 
-prodFst (x :*: y) = x
-prodSnd (x :*: y) = y
+prodFst :: (:*:) l r t1 -> l t1
+prodSnd :: (:*:) l r t1 -> r t1
+prodFst (x :*: _) = x
+prodSnd (_ :*: y) = y
 
 -- | Capitalizes the first letter and filters out all the non-alpha characters.
 humanReadable :: String -> String

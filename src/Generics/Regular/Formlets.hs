@@ -4,12 +4,10 @@
 module Generics.Regular.Formlets where
 
 import Control.Applicative
-import Control.Applicative.Error
 import Control.Monad.Identity
 import Text.XHtml.Strict ((+++), (<<))
 import qualified Text.XHtml.Strict as X
 import qualified Text.XHtml.Strict.Formlets as F
-import Text.Formlets (check)
 import Generics.Regular
 import Generics.Regular.Extras
 import Data.Record.Label
@@ -49,4 +47,5 @@ instance (GFormlet f, GFormlet g) => GFormlet (f :*: g) where
  
 instance (Selector s, GFormlet f) => GFormlet (S s f) where
   gformf f x = F.plug ((X.label << (h (fromJust x) ++ ": ")) +++) $ S <$> gformf f (unS <$> x)
-   where fromJust (Just x) = x
+   where fromJust (Just y) = y
+         fromJust _        = error "Formlets fromJust should not be computed."
