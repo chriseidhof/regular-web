@@ -10,6 +10,7 @@ Maintainer:      Chris Eidhof <chris+hackage@eidhof.nl>
 Homepage:        http://github.com/chriseidhof/basil
 Exposed-Modules:   Generics.Regular.Formlets
                  , Generics.Regular.Views
+                 , Generics.Regular.JSON
 Other-Modules:   Generics.Regular.Extras
 Build-Type:      Simple
 hs-source-dirs:  src
@@ -19,7 +20,8 @@ Build-Depends:   base >= 4,
                  formlets == 0.6.1,
                  applicative-extras,
                  regular >= 0.1.0.2,
-                 fclabels >= 0.4.2
+                 fclabels >= 0.4.2,
+                 json >= 0.4.3
 
 Description:     This package implements some generic functions for the web. 
                  .

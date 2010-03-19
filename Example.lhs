@@ -5,6 +5,8 @@
 > import Generics.Regular
 > import Generics.Regular.Views
 > import Generics.Regular.Formlets
+> import Generics.Regular.JSON
+> import Text.JSON
 > import Data.Record.Label
 > import Control.Monad.Identity
 > import Control.Applicative
@@ -20,13 +22,21 @@ Consider the following two datatypes @Person@ and @Place@:
 >  , _age    :: Int
 >  , _isMale :: Bool
 >  , _place  :: Place
-> }
+> } deriving Show
 
 > data Place = Place {
 >     _city      :: String
 >   , _country   :: String
 >   , _continent :: String
->   }
+>   } deriving Show
+
+> instance JSON Place where
+>   readJSON x = to <$> gfrom x
+>   showJSON x = gto (from x)
+>                
+> instance JSON Person where
+>   readJSON x = to <$> gfrom x
+>   showJSON x = gto (from x)
 
 We can now derive a @Regular@ instance for the @Person@ datatype using Template
 Haskell:

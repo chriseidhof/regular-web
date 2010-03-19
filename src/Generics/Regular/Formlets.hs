@@ -48,4 +48,4 @@ instance (GFormlet f, GFormlet g) => GFormlet (f :*: g) where
 instance (Selector s, GFormlet f) => GFormlet (S s f) where
   gformf f x = F.plug ((X.label << (h (fromJust x) ++ ": ")) +++) $ S <$> gformf f (unS <$> x)
    where fromJust (Just y) = y
-         fromJust _        = error "Formlets fromJust should not be computed."
+         fromJust _        = error "Generic formlets fromJust should not be computed."
