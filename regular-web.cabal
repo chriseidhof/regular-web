@@ -1,5 +1,5 @@
 Name:            regular-web
-Version:         0.1
+Version:         0.1.1
 Synopsis:        Generic programming for the web
 License:         BSD3
 License-file:    LICENSE
@@ -7,7 +7,7 @@ Category:        Generics, Web
 Copyright:       (c) Chris Eidhof
 Author:          Chris Eidhof
 Maintainer:      Chris Eidhof <chris+hackage@eidhof.nl>
-Homepage:        http://github.com/chriseidhof/basil
+Homepage:        http://github.com/chriseidhof/regular-web
 Exposed-Modules:   Generics.Regular.Formlets
                  , Generics.Regular.Views
                  , Generics.Regular.JSON
