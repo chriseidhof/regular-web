@@ -54,7 +54,7 @@ instance (GJSON (S s f), GJSON g) => GJSON ((S s f) :*: g) where
   gfrom' x       = do (:*:) <$> gfrom' x <*> gfrom' x
 
 instance (Selector s, GJSON f) => GJSON (S s f) where
-  gto' s@(S x) = JSObject $ toJSObject [(selName s, gto' x)]
+  gto' s@(S x) = JSObject $ toJSObject [(humanReadable $ selName s, gto' x)]
   gfrom' (JSObject obj) = let s = humanReadable $ selName (undefined :: S s f x) 
                          in case valFromObj s obj of
                                  Ok x    -> S <$> gfrom' x
