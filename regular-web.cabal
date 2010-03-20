@@ -25,8 +25,14 @@ Build-Depends:   base >= 4,
 
 Description: 
   This package implements generic functions for web programming.
-  Based on the @regular@ library, we provide generic functions for generating @HTML@, @Formlets@, and @JSON@.
-  For a larger example, see the @Example.lhs@ file on github: <http://github.com/chriseidhof/regular-web/blob/master/Example.lhs>.
+  Based on the @regular@ library [1], we provide generic functions for generating @HTML@, @Formlets@, and @JSON@.
+  For a larger example, see the @Example.lhs@ [2] file on github.
+  .
+    1. <http://hackage.haskell.org/package/regular>
+  .
+    2. <http://github.com/chriseidhof/regular-web/blob/master/Example.lhs>
+  .
+  /Example/
   .
   Consider the following datatypes:
   .
