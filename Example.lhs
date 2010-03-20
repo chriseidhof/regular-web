@@ -103,16 +103,16 @@ We can now use @fclabels@ to convert back and forth between @Person@ and
 
 Now we need to write a bidirectional function between @Bool@ and @Gender@:
 
-> genderBool :: Bool :-> Gender
-> genderBool = label boolToGender genderToBool
->  where  genderToBool Male   _ = True
->         genderToBool Female _ = False
+> genderBool :: Bool :<->: Gender
+> genderBool = boolToGender <-> genderToBool
+>  where  genderToBool Male   = True
+>         genderToBool Female = False
 >         boolToGender x      = if x then Male else Female
 
 We can now write a bidirectional function between @Person@ and @PersonView@:
 
 > toView :: Person :-> PersonView
-> toView = Label (PersonView <$> __name `for` name <*> __gender `for` (genderBool . isMale))
+> toView = Label (PersonView <$> __name `for` name <*> __gender `for` (genderBool `iso` isMale))
 
 Now that we have a function with type @Person :-> PersonView@, we can render a
 form for |personView| and update the original person. Note that the argument is

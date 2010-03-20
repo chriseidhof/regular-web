@@ -21,6 +21,8 @@
 -- >  , _age    :: Int
 -- >  , _isMale :: Bool
 -- > } deriving (Show, Eq)
+--
+-- We prefix all our fields with an underscore (@_@), so that our datatype will play nice with @fclabels@. 
 -- 
 -- > $(deriveAll ''Person "PFPerson")
 -- 
@@ -45,6 +47,8 @@ module Generics.Regular.Formlets (
   gform,
   gformlet,
   GFormlet,
+  XForm,
+  XFormlet,
   -- * Generic forms with fclabels
   projectedForm,
   -- * Default Formlet typeclass
@@ -93,7 +97,7 @@ gformlet x = to <$> (gformf gformlet (from <$> x))
 -- This is the bidirectional function between @Person@ and @PersonView@. How to write such a function is explained in the well-documented @fclabels@ package at <http://hackage.haskell.org/package/fclabels>.
 -- 
 -- > toView :: Person :-> PersonView
--- > toView = Label (PersonView <$> __name `for` name <*> __isMale `for` (boolToYesNo . isMale))
+-- > toView = Label (PersonView <$> __name `for` name <*> __isMale `for` (boolToYesNo `iso` isMale))
 -- 
 -- Now that we have a function with type @Person :-> PersonView@, we can render a
 -- form for @personView@ and update the original person. Note that the argument is
@@ -142,8 +146,8 @@ data YesNo = Yes | No
 instance Formlet YesNo where formlet = F.enumSelect []
 
 -- | This is an @fclabels@ function that converts between 'Bool' and 'YesNo' values.
-boolToYesNo :: Bool :-> YesNo
-boolToYesNo = label to from
- where  from Yes _ = True
-        from No  _ = False
+boolToYesNo :: Bool :<->: YesNo
+boolToYesNo = to <-> from
+ where  from Yes = True
+        from No  = False
         to x  = if x then Yes else No

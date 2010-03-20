@@ -25,7 +25,7 @@ Build-Depends:   base >= 4,
 
 Description: 
   This package implements generic functions for web programming.
-  Based on the @regular@ library, we can build generic functions for generating @HTML@, @Formlets@, @JSON@ and @XML@.
+  Based on the @regular@ library, we provide generic functions for generating @HTML@, @Formlets@, and @JSON@.
   For a larger example, see the @Example.lhs@ file on github: <http://github.com/chriseidhof/regular-web/blob/master/Example.lhs>.
   .
   Consider the following datatypes:
