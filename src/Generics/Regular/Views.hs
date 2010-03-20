@@ -12,11 +12,20 @@
 -- Stability   :  experimental
 -- Portability :  non-portable
 --
--- Summary: Functions for web programming.
+-- Summary: Functions for generating HTML.
 -----------------------------------------------------------------------------
 
 
-module Generics.Regular.Views where
+module Generics.Regular.Views (
+  -- * Generic HTML generation.
+  ghtml, 
+  Html (..),
+  GHtml
+  -- gtable, 
+  -- gtableRow,
+  -- Table (..),
+  -- GTable
+  ) where
 
 import Text.XHtml.Strict ((+++), (<<))
 import qualified Text.XHtml.Strict as X
@@ -68,6 +77,11 @@ instance (Selector s, GHtml f) => GHtml (S s f) where
 class Table a where
   table :: a -> X.Html
 
+instance Table Float  where table = html
+instance Table String where table = html
+instance Table Int    where table = html
+instance Table Bool   where table = html
+
 class GTable f where
   gtablef :: (a -> X.Html) -> f a -> X.Html
 
@@ -77,8 +91,8 @@ instance GTable I where
 instance (Constructor c, GTable f) => GTable (C c f) where
   gtablef f (C x) = X.tr << (gtablef f x)
 
-instance Html a => GTable (K a) where
-  gtablef _ (K x) = html x
+instance Table a => GTable (K a) where
+  gtablef _ (K x) = table x
 
 instance (GTable f, GTable g) => GTable (f :*: g) where
   gtablef f (x :*: y) = gtablef f x +++ gtablef f y
@@ -88,4 +102,3 @@ instance (Selector s, GTable f) => GTable (S s f) where
 
 gtableRow :: (Regular a, GTable (PF a)) => a -> X.Html
 gtableRow x = gtablef gtableRow (from x)
-

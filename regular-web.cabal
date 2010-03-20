@@ -1,6 +1,6 @@
 Name:            regular-web
 Version:         0.1
-Synopsis:        Some generic functions for the web
+Synopsis:        Generic programming for the web
 License:         BSD3
 License-file:    LICENSE
 Category:        Generics, Web
