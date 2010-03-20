@@ -22,13 +22,13 @@ Consider the following two datatypes @Person@ and @Place@:
 >  , _age    :: Int
 >  , _isMale :: Bool
 >  , _place  :: Place
-> } deriving Show
+> } deriving (Show, Eq)
 
 > data Place = Place {
 >     _city      :: String
 >   , _country   :: String
 >   , _continent :: String
->   } deriving Show
+>   } deriving (Show, Eq)
 
 > instance JSON Place where
 >   readJSON = gfrom
@@ -127,7 +127,15 @@ not a @Maybe@ value, in contrast with the @gformlet@ function.
 We can also generically generate JSON values. 
 
 > chrisJSON :: JSValue
-> chrisJSON = undefined
+> chrisJSON = gto chris
+
+> chrisFromJSON :: Result Person
+> chrisFromJSON = gfrom chrisJSON
+
+> testChrisFromJSON :: Bool
+> testChrisFromJSON = case chrisFromJSON of
+>   Ok x    -> x == chris
+>   Error e -> False
 
 To make all this work, we need to give an @Applicative@ instance for the @Identity@ monad.
 
