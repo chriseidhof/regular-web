@@ -31,25 +31,28 @@ Consider the following two datatypes @Person@ and @Place@:
 >   } deriving Show
 
 > instance JSON Place where
->   readJSON x = to <$> gfrom x
->   showJSON x = gto (from x)
+>   readJSON = gfrom
+>   showJSON = gto
 >                
 > instance JSON Person where
->   readJSON x = to <$> gfrom x
->   showJSON x = gto (from x)
+>   readJSON = gfrom
+>   showJSON = gto
 
 We can now derive a @Regular@ instance for the @Person@ datatype using Template
 Haskell:
 
 > $(deriveAll ''Place  "PFPlace")
 > $(deriveAll ''Person "PFPerson")
+
 >
 > type instance PF Place  = PFPlace
 > type instance PF Person = PFPerson
 
 We can construct an example person:
 
+> location :: Place
 > location = Place "Utrecht" "The Netherlands" "Europe"
+> chris    :: Person
 > chris    = Person "chris" 25 True location
 
 We can now generate some @Html@ for the @location@:
@@ -75,6 +78,7 @@ More interestingly, we can generically build @Formlet@s this way:
 We can print @formHtml@ to get the @Html@ of the form with the @chris@ value
 already filled in:
 
+> formHtml :: X.Html
 > (_, Identity formHtml, _) = F.runFormState [] (personForm (Just chris))
 
 This technique becomes even more powerful when we use the @fclabels@ package.
@@ -117,7 +121,13 @@ not a @Maybe@ value, in contrast with the @gformlet@ function.
 > personForm' :: Person -> XForm Identity Person
 > personForm' = projectedForm toView
 
+> formHtml' :: X.Html
 > (_, Identity formHtml', _) = F.runFormState [] (personForm' chris)
+
+We can also generically generate JSON values. 
+
+> chrisJSON :: JSValue
+> chrisJSON = undefined
 
 To make all this work, we need to give an @Applicative@ instance for the @Identity@ monad.
 
