@@ -54,6 +54,9 @@ instance Html String where html = X.toHtml
 class GHtml f where
   ghtmlf :: (a -> X.Html) -> f a -> X.Html
 
+
+
+
 instance GHtml I where
   ghtmlf f (I r) = f r
 
@@ -64,7 +67,7 @@ instance Html a => GHtml (K a) where
   ghtmlf _ (K x) = html x
 
 instance (GHtml f, GHtml g) => GHtml (f :*: g) where
-  ghtmlf f (x :*: y) = ghtmlf f x +++ X.br +++ ghtmlf f y
+  ghtmlf f (x :*: y) = X.p << (ghtmlf f x) +++  X.p << (ghtmlf f y)
 
 instance (GHtml f, GHtml g) => GHtml (f :+: g) where
   ghtmlf f (L x) = ghtmlf f x

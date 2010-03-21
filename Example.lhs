@@ -47,8 +47,6 @@ Haskell:
 
 > $(deriveAll ''Place  "PFPlace")
 > $(deriveAll ''Person "PFPerson")
-
->
 > type instance PF Place  = PFPlace
 > type instance PF Person = PFPerson
 
