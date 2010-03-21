@@ -23,6 +23,12 @@ Build-Depends:   base >= 4 && < 5,
                  fclabels >= 0.4.2,
                  json >= 0.4.3
 
+source-repository head
+  type:     git
+  branch:   master
+  location: git@github.com:chriseidhof/regular-web.git
+
+
 Description: 
   This package implements generic functions for web programming.
   Based on the @regular@ library [1], we provide generic functions for generating @HTML@, @Formlets@, and @JSON@.
