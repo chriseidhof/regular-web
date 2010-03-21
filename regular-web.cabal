@@ -7,10 +7,12 @@ Category:        Generics, Web
 Copyright:       (c) Chris Eidhof
 Author:          Chris Eidhof
 Maintainer:      Chris Eidhof <chris+hackage@eidhof.nl>
+Cabal-Version:   >= 1.2
 Homepage:        http://github.com/chriseidhof/regular-web
 Exposed-Modules:   Generics.Regular.Formlets
                  , Generics.Regular.Views
                  , Generics.Regular.JSON
+                 , Generics.Regular.BlazeHtml
 Other-Modules:   Generics.Regular.Extras
 Build-Type:      Simple
 hs-source-dirs:  src
@@ -21,13 +23,8 @@ Build-Depends:   base >= 4 && < 5,
                  applicative-extras,
                  regular >= 0.1.0.2,
                  fclabels >= 0.4.2,
-                 json >= 0.4.3
-
-source-repository head
-  type:     git
-  branch:   master
-  location: git@github.com:chriseidhof/regular-web.git
-
+                 json >= 0.4.3,
+                 BlazeHtml
 
 Description: 
   This package implements generic functions for web programming.

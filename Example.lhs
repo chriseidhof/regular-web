@@ -6,12 +6,16 @@
 > import Generics.Regular.Views
 > import Generics.Regular.Formlets
 > import Generics.Regular.JSON
+> import qualified Generics.Regular.BlazeHtml as B
 > import Text.JSON
 > import Data.Record.Label
 > import Control.Monad.Identity
 > import Control.Applicative
 > import qualified Text.XHtml.Strict as X
 > import qualified Text.XHtml.Strict.Formlets as F
+> import qualified Text.BlazeHtml.Html as Blaze
+> import Text.BlazeHtml.Render.HtmlIO (renderHtmlIO)
+> import System.IO (stdout)
 > import Prelude hiding ((.))
 > import Control.Category ((.))
 
@@ -137,6 +141,8 @@ We can also generically generate JSON values.
 >   Ok x    -> x == chris
 >   Error e -> False
 
-To make all this work, we need to give an @Applicative@ instance for the @Identity@ monad.
+> instance B.ToHtml Place where
+>   toHtml = B.ghtml
 
-> instance Applicative Identity where pure = return; (<*>) = ap
+> exampleBlaze :: IO ()
+> exampleBlaze = renderHtmlIO stdout (B.ghtml chris)

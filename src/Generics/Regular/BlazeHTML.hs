@@ -4,7 +4,7 @@
 
 -----------------------------------------------------------------------------
 -- |
--- Module      :  Generics.Regular.Views
+-- Module      :  Generics.Regular.BlazeHtml
 -- Copyright   :  (c) 2010 Chris Eidhof
 -- License     :  BSD3
 --
@@ -12,7 +12,7 @@
 -- Stability   :  experimental
 -- Portability :  non-portable
 --
--- Summary: Functions for generating HTML.
+-- Summary: Functions for generating HTML using the BlazeHtml library.
 -----------------------------------------------------------------------------
 
 
@@ -31,7 +31,12 @@ import Generics.Regular.Extras
 
 import Data.Monoid
 
--- | The function 'ghtml' converts an 'a' value into 'X.Html'
+-- | The function 'ghtml' converts an 'a' value into a Blaze Html value.
+-- 
+-- As an example, we can render a value to the standard-out:
+--
+-- > exampleBlaze :: IO ()
+-- > exampleBlaze = renderHtmlIO stdout (B.ghtml chris)
 ghtml :: (Regular a, GHtml (PF a), B.Html h) => a -> h
 ghtml x = ghtmlf ghtml (from x)
 
