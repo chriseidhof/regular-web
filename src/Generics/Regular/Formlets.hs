@@ -78,7 +78,7 @@ gformlet x = to <$> (gformf gformlet (from <$> x))
 -- |
 -- Generic forms almost never match the real world. If you want to change a generic form, you can either implement it from scratch, or use the 'projectedForm' function.
 -- 
--- As an example, we will to remove the 'age' field from the form, and change the '_isMale' field to a Yes\/No choice instead of a True\/False choice. The datatype 'YesNo' is defined in this module.
+-- As an example, we will to remove the @age@ field from the form, and change the @_isMale@ field to a @Yes\/No@ choice instead of a @True\/False@ choice. The datatype 'YesNo' is defined in this module.
 -- 
 -- > data PersonView = PersonView {
 -- >    __name   :: String
