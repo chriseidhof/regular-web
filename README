@@ -1,16 +1,23 @@
 To compile from source, do:
 
+> git clone git@github.com:chriseidhof/regular-web.git
+> cd regular-web
 > cabal configure && cabal build
 
 This will possibly indicate that you have missing packages, which you can
 install via cabal.
 
-Or if you want to install the package, execute the following command at
+Or, if you want to install the package, execute the following command at
 top-level:
 
 > cabal install
 
-Alternatively, you can just clone the package and load Example.lhs in your GHCi.
+Alternatively, you can not build anything, and do
+
+> ghci Example.lhs
+
+However, you have to make sure you have all the packages in the
+regular-web.cabal installed.
 
 It may complain that it can't find some modules, that is because all the library
 code is in the src directory. You can solve this by changing (or creating) the
