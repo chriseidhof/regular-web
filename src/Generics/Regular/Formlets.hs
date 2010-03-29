@@ -56,7 +56,11 @@ module Generics.Regular.Formlets (
   -- * Extra form types
   -- | Currently, this section is very limited. We expect to add more types in the future, suggestions are welcome.
   YesNo (..),
-  boolToYesNo
+  boolToYesNo,
+  Gender (..),
+  isMaleToGender,
+  RepeatedPassword (..)
+
   ) where
 
 import Control.Applicative
@@ -64,6 +68,7 @@ import Control.Monad.Identity
 import Text.XHtml.Strict ((+++), (<<))
 import qualified Text.XHtml.Strict as X
 import qualified Text.XHtml.Strict.Formlets as F
+import Control.Applicative.Error (Failing (..))
 import Generics.Regular
 import Generics.Regular.Extras
 import Data.Record.Label
@@ -151,3 +156,28 @@ boolToYesNo = to <-> from
  where  from Yes = True
         from No  = False
         to x  = if x then Yes else No
+
+data Gender = Male | Female
+  deriving (Eq, Show, Bounded, Enum)
+instance Formlet Gender where formlet = F.enumSelect []
+
+-- | This is an @fclabels@ function that converts between 'Bool' and 'Gender' values.
+isMaleToGender :: Bool :<->: Gender
+isMaleToGender = to <-> from
+ where  from Male = True
+        from Female = False
+        to x = if x then Male else Female
+
+-- | The @RepeatedPassword@ asks for a repeated password, and gives an error if the passwords do not match.
+newtype RepeatedPassword = RepeatedPassword {toPassword :: String}
+
+instance Formlet RepeatedPassword where formlet = formletRepeatedPassword
+
+formletRepeatedPassword :: (Monad m, Applicative m) => F.Formlet X.Html m RepeatedPassword
+formletRepeatedPassword _ = ((,) <$> F.password Nothing 
+                                 <*  F.label "Repeat password: "
+                                 <*> F.password Nothing)
+                            `F.check` equalPasswords
+
+equalPasswords (x,y) = if x == y then Success (RepeatedPassword x) else Failure ["The passwords do not match."]
+
